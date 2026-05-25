@@ -6,13 +6,13 @@
     <p class="text-muted">Owned by {{ album.owner.username }} · {{ album.photos.count }} photos</p>
     <p>{{ album.description|linebreaks }}</p>
     <div class="btn-group" role="group">
-        {% if user.is_authenticated and user.has_perm('albums.add_photo') %}
+        {% if perms.albums.add_photo %}
             <a class="btn btn-outline-secondary" href="{% url 'photo-add' album.pk %}">Add Photo</a>
         {% endif %}
-        {% if user.is_authenticated and user.has_perm('albums.change_album') %}
+        {% if perms.albums.change_album %}
             <a class="btn btn-outline-secondary" href="{% url 'album-edit' album.pk %}">Edit Album</a>
         {% endif %}
-        {% if user.is_authenticated and user.has_perm('albums.delete_album') %}
+        {% if perms.albums.delete_album %}
             <a class="btn btn-outline-danger" href="{% url 'album-delete' album.pk %}">Delete Album</a>
         {% endif %}
         <a class="btn btn-outline-secondary" href="{% url 'album-list' %}">Back to Albums</a>
@@ -29,10 +29,10 @@
                         <p class="card-text text-truncate">{{ photo.caption }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                {% if user.is_authenticated and user.has_perm('albums.change_photo') %}
+                                {% if perms.albums.change_photo %}
                                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'photo-edit' photo.pk %}">Edit</a>
                                 {% endif %}
-                                {% if user.is_authenticated and user.has_perm('albums.delete_photo') %}
+                                {% if perms.albums.delete_photo %}
                                     <a class="btn btn-sm btn-outline-danger" href="{% url 'photo-delete' photo.pk %}">Delete</a>
                                 {% endif %}
                             </div>
