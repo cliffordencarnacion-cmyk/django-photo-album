@@ -4,7 +4,7 @@ services:
   env: python
   region: oregon
   plan: starter
-  buildCommand: pip install -r requirements.txt
+  buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
   startCommand: gunicorn photo_album.wsgi:application --bind 0.0.0.0:$PORT
   envVars:
   - key: DJANGO_SECRET_KEY
@@ -20,6 +20,14 @@ services:
   - key: DJANGO_DEBUG
     value: "False"
     sync: true
+  - key: DJANGO_ENV
+    value: production
+    sync: true
+  - key: DJANGO_ALLOWED_HOSTS
+    value: .onrender.com
+    sync: true
+  - key: DJANGO_CSRF_TRUSTED_ORIGINS
+    sync: false
 
 databases:
 - name: django-photo-album-db
