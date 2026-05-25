@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{% if view.object %}Edit Photo{% else %}Add Photo{% endif %}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title mb-3">{% if view.object %}Edit Photo{% else %}Add Photo{% endif %}</h1>
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-3">{{ form.title.label_tag }}{{ form.title }}</div>
+                    <div class="mb-3">{{ form.caption.label_tag }}{{ form.caption }}</div>
+                    <div class="mb-3">{{ form.image.label_tag }}{{ form.image }}</div>
+                    <button class="btn btn-primary" type="submit">Save Photo</button>
+                    <a class="btn btn-secondary" href="{% if view.object %}{% url 'album-detail' view.object.album.pk %}{% else %}{% url 'album-detail' album.pk %}{% endif %}">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

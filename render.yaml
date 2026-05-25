@@ -1,0 +1,28 @@
+services:
+- type: web
+  name: django-photo-album
+  env: python
+  region: oregon
+  plan: starter
+  buildCommand: pip install -r requirements.txt
+  startCommand: gunicorn photo_album.wsgi:application --bind 0.0.0.0:$PORT
+  envVars:
+  - key: DJANGO_SECRET_KEY
+    sync: false
+  - key: DATABASE_URL
+    sync: false
+  - key: CLOUDINARY_CLOUD_NAME
+    sync: false
+  - key: CLOUDINARY_API_KEY
+    sync: false
+  - key: CLOUDINARY_API_SECRET
+    sync: false
+  - key: DJANGO_DEBUG
+    value: "False"
+    sync: true
+
+databases:
+- name: django-photo-album-db
+  plan: free
+  region: oregon
+  databaseName: django_photo_album
